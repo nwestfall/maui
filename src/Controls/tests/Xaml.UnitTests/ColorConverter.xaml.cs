@@ -6,24 +6,19 @@ namespace Microsoft.Maui.Controls.Xaml.UnitTests
 {
 	public partial class ColorConverter : ContentPage
 	{
+		class Data
+		{
+			public string ButtonBackground => "#fc87ad";
+		}
+
 		public ColorConverter()
 		{
 			InitializeComponent();
-
-			BindingContext = this;
 		}
 
 		public ColorConverter(bool useCompiledXaml)
 		{
 			//this stub will be replaced at compile time
-		}
-
-		public string ButtonBackground
-		{
-			get
-			{
-				return "#fc87ad";
-			}
 		}
 
 		[TestFixture]
@@ -33,11 +28,11 @@ namespace Microsoft.Maui.Controls.Xaml.UnitTests
 			[TestCase(true)]
 			public void StringsAreValidAsColor(bool useCompiledXaml)
 			{
-				var layout = new ColorConverter(useCompiledXaml);
+				var page = new ColorConverter(useCompiledXaml);
+				page.BindingContext = new Data();
 
 				var expected = Color.FromArgb("#fc87ad");
-
-				Assert.AreEqual(expected, layout.Button0.BackgroundColor);
+				Assert.AreEqual(expected, page.Button0.BackgroundColor);
 			}
 		}
 	}
